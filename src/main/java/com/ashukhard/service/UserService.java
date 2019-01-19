@@ -41,7 +41,7 @@ public interface UserService {
 	 * @param userDTO: DTO of user to be saved
 	 * @return UserDTO: UserDTO
 	 */
-	UserDTO save(UserDTO userDTO);
+	void save(UserDTO userDTO);
 	
 	/**
 	 * Update a user data

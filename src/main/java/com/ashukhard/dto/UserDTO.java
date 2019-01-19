@@ -6,6 +6,7 @@ import java.util.Set;
 import lombok.Data;
 
 import com.ashukhard.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * DTO class for {@link User}
@@ -25,9 +26,28 @@ public class UserDTO {
 	
 	private String lastname;
 	
+	private String dateOfBirth;
+	
+	@JsonIgnore
 	private Date birthdate;
 
 	private Set<RoleDTO> roles;
 
 	private Set<AddressDTO> address;
+	
+	public Date getBirthdate() {
+		//TODO return the formated date of String dateOfBirth
+		if (birthdate == null && dateOfBirth != null)
+			return new Date();
+		else 
+			return this.birthdate;
+	}
+	
+	public String getDateOfBirth() {
+		//TODO return the formated date of Date birthdate
+		if (dateOfBirth == null && birthdate != null)
+			return new String();
+		else 
+			return this.dateOfBirth;
+	}
 }
