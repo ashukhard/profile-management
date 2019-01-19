@@ -13,6 +13,11 @@ import com.ashukhard.dto.UserDTO;
 import com.ashukhard.model.User;
 import com.ashukhard.service.UserService;
 
+/**
+ * See {@link UserService}
+ * 
+ * @author ashutosh
+ */
 @Service(value = "userService")
 public class UserServiceImpl implements UserService {
 	
