@@ -1,15 +1,20 @@
 package com.ashukhard.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.ashukhard.dao.RoleDao;
 import com.ashukhard.dao.UserDao;
 import com.ashukhard.dto.UserDTO;
+import com.ashukhard.dto.UserPasswordDTO;
+import com.ashukhard.model.Role;
 import com.ashukhard.model.User;
 import com.ashukhard.service.UserService;
 
@@ -23,6 +28,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private RoleDao roleDao;
 
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
@@ -47,9 +55,18 @@ public class UserServiceImpl implements UserService {
 		return list;
 	}
 
-	public void save(UserDTO userDTO) {
-		User newUser = modelMapper.map(userDTO, User.class);
-	    newUser.setPassword(bcryptEncoder.encode(userDTO.getPassword()));
+	public void save(UserPasswordDTO userPasswordDTO) {
+		User newUser = modelMapper.map(userPasswordDTO, User.class);
+		newUser.setId(null);
+	    newUser.setPassword(bcryptEncoder.encode(userPasswordDTO.getPassword()));
+	    Set<Role> roles = new HashSet<Role>();
+	    userPasswordDTO.getRoles().forEach( roleDTO -> {
+	    	roles.add(roleDao.findById(roleDTO.getId()).get());
+	    });
+	    newUser.setRoles(roles);
+	    newUser.getAddress().forEach(address -> {
+	    	address.setId(null);
+	    });
         userDao.save(newUser);
 	}
 

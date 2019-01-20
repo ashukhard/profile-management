@@ -13,4 +13,13 @@ public enum AddressType {
 	public int getId() {
 		return id;
 	}
+
+	public static AddressType getAddressType(int id) {
+		for (AddressType addressType : AddressType.values()) {
+			if (addressType.getId() == id)
+				return addressType;
+		}
+		return null;
+	}
+
 }

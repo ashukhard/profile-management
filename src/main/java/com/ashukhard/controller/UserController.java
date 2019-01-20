@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ashukhard.dto.UserDTO;
+import com.ashukhard.dto.UserPasswordDTO;
 import com.ashukhard.service.UserService;
 
 /**
@@ -35,20 +36,35 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/user", method = RequestMethod.POST)
-	public HttpStatus post(@RequestBody UserDTO userDTO) {
-		userService.save(userDTO);// TODO add exception handling
+	public HttpStatus post(@RequestBody UserPasswordDTO userPasswordDTO) {
+		try {
+			userService.save(userPasswordDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		return HttpStatus.OK;
 	}
 	
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
 	public HttpStatus update(@PathVariable(value = "id") Long id, @RequestBody UserDTO userDTO) {
-		userService.update(userDTO);// TODO update implementation
+		try {
+			userService.update(userDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		return HttpStatus.OK;
 	}
 	
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
 	public HttpStatus delete(@PathVariable(value = "id") Long id) {
-		userService.delete(id);// TODO add exception handling
+		try {
+			userService.delete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return HttpStatus.INTERNAL_SERVER_ERROR;
+		}
 		return HttpStatus.OK;
 	}
 

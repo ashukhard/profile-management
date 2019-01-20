@@ -6,6 +6,7 @@ import java.util.Set;
 import lombok.Data;
 
 import com.ashukhard.model.User;
+import com.ashukhard.util.Util;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -19,8 +20,6 @@ public class UserDTO {
 	private long id;
 	
 	private String username;
-	
-	private String password;
 	
 	private String firstname;
 	
@@ -38,7 +37,7 @@ public class UserDTO {
 	public Date getBirthdate() {
 		//TODO return the formated date of String dateOfBirth
 		if (birthdate == null && dateOfBirth != null)
-			return new Date();
+			return Util.getDate(this.dateOfBirth);
 		else 
 			return this.birthdate;
 	}
@@ -46,7 +45,7 @@ public class UserDTO {
 	public String getDateOfBirth() {
 		//TODO return the formated date of Date birthdate
 		if (dateOfBirth == null && birthdate != null)
-			return new String();
+			return Util.getStringDate(this.birthdate);
 		else 
 			return this.dateOfBirth;
 	}

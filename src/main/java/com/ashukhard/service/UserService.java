@@ -1,6 +1,7 @@
 package com.ashukhard.service;
 
 import com.ashukhard.dto.UserDTO;
+import com.ashukhard.dto.UserPasswordDTO;
 import com.ashukhard.model.User;
 
 import java.util.List;
@@ -39,9 +40,9 @@ public interface UserService {
 	 * Save a user
 	 * 
 	 * @param userDTO: DTO of user to be saved
-	 * @return UserDTO: UserDTO
+	 * @return UserPasswordDTO: UserPasswordDTO
 	 */
-	void save(UserDTO userDTO);
+	void save(UserPasswordDTO userPasswordDTO);
 	
 	/**
 	 * Update a user data
