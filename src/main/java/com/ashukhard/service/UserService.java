@@ -40,7 +40,6 @@ public interface UserService {
 	 * Save a user
 	 * 
 	 * @param userDTO: DTO of user to be saved
-	 * @return UserPasswordDTO: UserPasswordDTO
 	 */
 	void save(UserPasswordDTO userPasswordDTO);
 	
@@ -48,9 +47,8 @@ public interface UserService {
 	 * Update a user data
 	 * 
 	 * @param userDTO: DTO of user to be updated
-	 * @return UserDTO: UserDTO
 	 */
-	UserDTO update(UserDTO userDTO);
+	void update(UserDTO userDTO);
 
 	/**
 	 * Delete a user by id

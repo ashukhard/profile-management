@@ -1,6 +1,8 @@
 package com.ashukhard.dao;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.ashukhard.model.User;
@@ -20,4 +22,7 @@ public interface UserDao extends CrudRepository<User, Long> {
 	 * @return User: User
 	 */
 	User findByUsername(String username);
+	
+	@Query("SELECT u.password FROM User u WHERE u.id = :id")
+    public String getPassword(@Param("id") Long id);
 }

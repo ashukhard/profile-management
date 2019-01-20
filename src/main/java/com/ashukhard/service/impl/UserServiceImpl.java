@@ -18,6 +18,7 @@ import com.ashukhard.dao.RoleDao;
 import com.ashukhard.dao.UserDao;
 import com.ashukhard.dto.UserDTO;
 import com.ashukhard.dto.UserPasswordDTO;
+import com.ashukhard.model.Address;
 import com.ashukhard.model.Role;
 import com.ashukhard.model.User;
 import com.ashukhard.service.UserService;
@@ -74,11 +75,22 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         userDao.save(newUser);
 	}
 
-	public UserDTO update(UserDTO userDTO) {
-		// TODO add implementation
-		return null;
+	public void update(UserDTO userDTO) {
+		User user = userDao.findById(userDTO.getId()).get();
+		Set<Role> roles = new HashSet<Role>();
+		userDTO.getRoles().forEach( roleDTO -> {
+	    	roles.add(roleDao.findById(roleDTO.getId()).get());
+	    });
+		user.setRoles(roles);
+		Set<Address> address = new HashSet<Address>();
+		userDTO.getAddress().forEach( addressDTO -> {
+			address.add(modelMapper.map(addressDTO, Address.class));
+	    });
+		user.setAddress(address);
+		modelMapper.map(userDTO, user);
+		userDao.save(user);
 	}
-	
+
 	public void delete(long id) {
 		userDao.deleteById(id);
 	}
