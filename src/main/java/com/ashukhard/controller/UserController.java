@@ -2,6 +2,8 @@ package com.ashukhard.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,7 @@ import com.ashukhard.dto.UserDTO;
 import com.ashukhard.dto.UserPasswordDTO;
 import com.ashukhard.model.AuthToken;
 import com.ashukhard.service.UserService;
+import com.ashukhard.util.PermissionEvaluator;
 
 /**
  * Controller for User services
@@ -36,6 +39,9 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PermissionEvaluator permissionEvaluator;
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -52,11 +58,14 @@ public class UserController {
 		return ResponseEntity.ok(new AuthToken(token));
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public UserDTO get(@PathVariable(value = "id") Long id) {
-		// TODO add check that the user authenticated can get it's own profile only
-		return userService.getById(id);
+	public ResponseEntity get(@PathVariable(value = "id") Long id, HttpServletRequest request) {
+		if (permissionEvaluator.hasPermission(request, id))
+			return new ResponseEntity<UserDTO>(userService.getById(id), HttpStatus.OK);
+		else 
+			return new ResponseEntity(null, HttpStatus.FORBIDDEN);
 	}
 
 	@PreAuthorize("hasRole('ADMIN')")
@@ -85,10 +94,12 @@ public class UserController {
 	
 	@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.DELETE)
-	public HttpStatus delete(@PathVariable(value = "id") Long id) {
+	public HttpStatus delete(@PathVariable(value = "id") Long id, HttpServletRequest request) {
 		try {
-			// TODO add check that the user authenticated can delete it's own profile only
-			userService.delete(id);
+			if (permissionEvaluator.hasPermission(request, id))
+				userService.delete(id);
+			else
+				return HttpStatus.FORBIDDEN;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return HttpStatus.INTERNAL_SERVER_ERROR;
