@@ -5,14 +5,14 @@ This is a simple REST based microservices app for User profile management.
 	 'ADMIN' - Allowed to Create, Read, Update and Delete Users
 	 'USER' - Allowed to only read and delete their own profile
 
-##Requirements
+#Requirements
 	For building and running the application you need:
 
 	 JDK 1.8
 	 Maven 3
 	 MySQL
 
-##Steps to Setup
+#Steps to Setup
 
 	1. Clone the repository
 		git clone https://github.com/ashukhard/profile-management.git
@@ -23,10 +23,10 @@ This is a simple REST based microservices app for User profile management.
 		cd profile-management
 		mvn spring-boot:run
 
-##To view Swagger 2 API docs
+#To view Swagger 2 API docs
 	Run the server and browse to localhost:8090/swagger-ui.html
 
-##Endpoints details
+#Endpoints details
 Following are the endpoints in brief:
 	
 	1.POST User Login : http://localhost:8090/user/login
@@ -36,11 +36,12 @@ Following are the endpoints in brief:
 	5.DELETE User: http://localhost:8090/user/{id}
 	6.GET all Users: http://localhost:8090/users
 
-##Detail endpoint execution
+#Detail endpoint execution
 All the endpoints other than POST User login are protected. General flow is to get authenticated first with login endpoint and
 then use the JWT token generated for other endpoints. SQL scripts creates an admin with username: admin and password: password .
 
-###1.POST User Login
+#1.POST User Login
+
 	POST http://localhost:8090/user/login
 	Content-Type:application/json
 	
@@ -55,7 +56,8 @@ then use the JWT token generated for other endpoints. SQL scripts creates an adm
 		"token":"eyJhbGciOxxxx9NiJ9.eyJzdWI9wZXMiOiJST0xFXxxxxxDA1ODE5NX0.hZfGwkcUwdcN9JxxxxxwNcyHaPk"
 	}
 
-###2.GET a User
+#2.GET a User
+
 	GET http://localhost:8090/user/1
 	Content-Type:application/json
 	Authorization:Bearer eyJhbGciOxxxx9NiJ9.eyJzdWI9wZXMiOiJST0xFXxxxxxDA1ODE5NX0.hZfGwkcUwdcN9JxxxxxwNcyHaPk
@@ -90,7 +92,7 @@ then use the JWT token generated for other endpoints. SQL scripts creates an adm
 	    ]
 	}
 	
-###3.POST Create User
+#3.POST Create User
 The roles and address-type can be added, refer to possible options in the end.
 
 	POST http://localhost:8090/user
@@ -140,7 +142,7 @@ or/and
 Possible ADDRESS types are:
 HOME, OFFICE, EMAIL
 
-###4.PUT Update User
+#4.PUT Update User
 The roles and address-type can be updated or new once can be added, refer to possible options in the end.
 
 	PUT http://localhost:8090/user/2
@@ -196,7 +198,8 @@ or/and
 Possible ADDRESS types are:
 HOME, OFFICE, EMAIL
 
-###5.DELETE User
+#5.DELETE User
+
 	DELETE http://localhost:8090/user/2
 	Content-Type:application/json
 	Authorization:Bearer eyJhbGciOxxxx9NiJ9.eyJzdWI9wZXMiOiJST0xFXxxxxxDA1ODE5NX0.hZfGwkcUwdcN9JxxxxxwNcyHaPk
@@ -207,7 +210,8 @@ HOME, OFFICE, EMAIL
 	Response Body:
 	"OK"
 
-###6.GET all Users
+#6.GET all Users
+
 	GET http://localhost:8090/users
 	Content-Type:application/json
 	Authorization:Bearer eyJhbGciOxxxx9NiJ9.eyJzdWI9wZXMiOiJST0xFXxxxxxDA1ODE5NX0.hZfGwkcUwdcN9JxxxxxwNcyHaPk
@@ -242,7 +246,7 @@ HOME, OFFICE, EMAIL
 	    ]
 	}]
 	
-##Efforts and challenges
+#Efforts and challenges
 It took over three days, around 15-18 hours to build the app. I have used spring security before but this was the firstime I 
 was using JWT based spring security so took some time to understand and integrate it.
 
