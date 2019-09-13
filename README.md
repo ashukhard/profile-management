@@ -246,9 +246,5 @@ HOME, OFFICE, EMAIL
 	    ]
 	}]
 	
-#Efforts and challenges
-It took over three days, around 15-18 hours to build the app. I have used spring security before but this was the firstime I 
-was using JWT based spring security so took some time to understand and integrate it.
-
 Thanks and all the suggestions for improvements are welcomed.
 	
